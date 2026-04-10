@@ -15,6 +15,9 @@ import { NotificationProvider } from "./contexts/NotificationContext";
 import Login from "./pages/auth/Login";
 import JobDetail from "./pages/client/JobDetail";
 import UserApps from "./pages/client/UserApps";
+import ChatPage from "./pages/shared/ChatPage";
+import UserBookmarks from "./pages/client/UserBookmarks";
+import ManageSkills from "./pages/admin/ManageSkills";
 
 // --- XÓA DÒNG NÀY ĐI ---
 // const Login = () => <div className="p-10 text-xl font-bold">Trang Đăng Nhập (Login)</div>;
@@ -65,8 +68,12 @@ const App = () => {
               <Route path="/admin/companies" element={<ManageCompanies />} />
               <Route path="/admin/jobs" element={<ManageJobs />} />
               <Route path="/admin/resumes" element={<ManageResumes />} />
+              <Route path="/admin/skills" element={<ManageSkills />} />
+              <Route path="/admin/chat" element={<ChatPage />} />
 
               <Route path="/hr" element={<HrDashboard />} />
+              <Route path="/hr/skills" element={<ManageSkills />} />
+              <Route path="/hr/chat" element={<ChatPage />} />
             </Route>
           </Route>
 
@@ -78,6 +85,8 @@ const App = () => {
               <Route path="/home" element={<Home />} />
               <Route path="/job/:id" element={<JobDetail />} />
               <Route path="/my-apps" element={<UserApps />} />
+              <Route path="/bookmarks" element={<UserBookmarks />} />
+              <Route path="/chat" element={<ChatPage />} />
             </Route>
           </Route>
 

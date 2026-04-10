@@ -8,6 +8,7 @@ import {
 } from "../services/notifications.service";
 import type { INotification } from "../types/notification.type";
 import { message } from "antd";
+import { getSocketBaseUrl } from "../utils/socket";
 
 interface NotificationContextType {
   notifications: INotification[];
@@ -38,13 +39,10 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
       });
 
       // 2. Thiết lập kết nối Socket thời gian thực
-      socketRef.current = io(
-        `${import.meta.env.VITE_BACKEND_URL}/notifications`,
-        {
-          transports: ["websocket"],
-          withCredentials: true,
-        },
-      );
+      socketRef.current = io(`${getSocketBaseUrl()}/notifications`, {
+        transports: ["websocket"],
+        withCredentials: true,
+      });
 
       const socket = socketRef.current;
 

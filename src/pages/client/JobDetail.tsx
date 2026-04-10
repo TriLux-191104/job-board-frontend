@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { fetchJobsAPI } from "../../services/jobs.service";
 import ApplyModal from "./components/ApplyModal";
 import type { IJob } from "../../types/job.type";
+import BookmarkButton from "../../components/shared/BookmarkButton";
 
 const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -69,6 +70,10 @@ const JobDetail = () => {
         >
           Ứng tuyển ngay
         </button>
+        <BookmarkButton
+          jobId={job._id}
+          className="w-full md:w-auto justify-center"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

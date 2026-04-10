@@ -4,6 +4,8 @@ import NotificationBell from "../components/shared/NotificationBell"; // Import 
 
 const AdminLayout = () => {
   const { user, logoutContext } = useAuth();
+  const chatPath = user?.role?.name === "HR" ? "/hr/chat" : "/admin/chat";
+  const skillPath = user?.role?.name === "HR" ? "/hr/skills" : "/admin/skills";
 
   return (
     <div className="flex h-screen bg-gray-100 font-sans">
@@ -47,6 +49,18 @@ const AdminLayout = () => {
             className="block px-4 py-2 rounded text-gray-400 hover:bg-gray-800 hover:text-white transition"
           >
             Quản lý CV
+          </Link>
+          <Link
+            to={skillPath}
+            className="block px-4 py-2 rounded text-gray-400 hover:bg-gray-800 hover:text-white transition"
+          >
+            Quáº£n lĂ½ Skills
+          </Link>
+          <Link
+            to={chatPath}
+            className="block px-4 py-2 rounded text-gray-400 hover:bg-gray-800 hover:text-white transition"
+          >
+            Tin nhắn
           </Link>
         </nav>
 

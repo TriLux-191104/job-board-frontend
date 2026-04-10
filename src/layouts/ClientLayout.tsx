@@ -34,6 +34,18 @@ const ClientLayout = () => {
             >
               Lịch sử ứng tuyển
             </Link>
+            <Link
+              to="/bookmarks"
+              className="text-sm font-bold text-gray-600 hover:text-red-600 transition-colors"
+            >
+              Job Ä‘Ă£ lÆ°u
+            </Link>
+            <Link
+              to="/chat"
+              className="text-sm font-bold text-gray-600 hover:text-red-600 transition-colors"
+            >
+              Tin nhắn
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3">

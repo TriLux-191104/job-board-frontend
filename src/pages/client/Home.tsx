@@ -1,27 +1,27 @@
 import { useState, useMemo } from "react";
 import { fetchJobsAPI } from "../../services/jobs.service";
 import { usePaginatedFetch } from "../../hooks/usePaginatedFetch";
-import { useAuth } from "../../contexts/AuthContext"; // Để lấy thông tin user cho Modal
+import { useAuth } from "../../contexts/AuthContext";
 import type { IJob } from "../../types/job.type";
 import JobCard from "../../components/shared/JobCard";
 import SubscribeModal from "./components/SubscribeModal";
 
 const Home = () => {
-  const { user } = useAuth(); // Lấy thông tin user đang đăng nhập
+  const { user } = useAuth();
 
   // --- State quản lý Modal Đăng ký nhận tin ---
   const [isSubsOpen, setIsSubsOpen] = useState(false);
 
   // --- State quản lý Search & Filter ---
   const [searchTerm, setSearchTerm] = useState("");
-  const [level, setLevel] = useState(""); // Lọc theo trình độ/loại hàng
+  const [level, setLevel] = useState("");
   const [filter, setFilter] = useState({ name: "", level: "" });
 
   // Xây dựng query string gửi lên Backend
   const finalQuery = useMemo(() => {
     const params = new URLSearchParams();
     params.append("isActive", "true");
-    if (filter.name) params.append("name", `/${filter.name}/i`); // Tìm kiếm tương đối
+    if (filter.name) params.append("name", `/${filter.name}/i`);
     if (filter.level) params.append("level", filter.level);
     return params.toString();
   }, [filter]);
@@ -40,7 +40,7 @@ const Home = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setCurrent(1); // Reset về trang 1 khi tìm kiếm mới
+    setCurrent(1);
     setFilter({ name: searchTerm, level: level });
   };
 
@@ -54,11 +54,12 @@ const Home = () => {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight z-10">
-          Thời trang <span className="text-red-500">Đẳng cấp</span> & Phong cách
+          Tìm kiếm công việc <span className="text-red-500">mơ ước</span> của
+          bạn
         </h1>
         <p className="text-gray-400 max-w-2xl mb-10 text-lg z-10">
-          Khám phá bộ sưu tập mới nhất. Tìm kiếm phong cách phù hợp với cá tính
-          của bạn ngay hôm nay.
+          Hàng ngàn cơ hội nghề nghiệp tại các công ty công nghệ hàng đầu đang
+          chờ đón bạn. Bắt đầu sự nghiệp ngay hôm nay.
         </p>
 
         <form
@@ -82,7 +83,7 @@ const Home = () => {
             </svg>
             <input
               type="text"
-              placeholder="Tìm kiếm sản phẩm (Áo, Quần, Phụ kiện...)"
+              placeholder="Vị trí ứng tuyển, kỹ năng (React, NodeJS...)"
               className="w-full py-3 text-gray-900 outline-none font-medium"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -95,25 +96,26 @@ const Home = () => {
               value={level}
               onChange={(e) => setLevel(e.target.value)}
             >
-              <option value="">Tất cả loại</option>
-              <option value="INTERN">Hàng mới về</option>
-              <option value="FRESHER">Bộ sưu tập Xuân</option>
-              <option value="MIDDLE">Hàng thiết kế</option>
-              <option value="SENIOR">Luxury</option>
+              <option value="">Tất cả cấp bậc</option>
+              <option value="INTERN">Intern</option>
+              <option value="FRESHER">Fresher</option>
+              <option value="JUNIOR">Junior</option>
+              <option value="MIDDLE">Middle</option>
+              <option value="SENIOR">Senior</option>
             </select>
           </div>
 
           <button
             type="submit"
-            className="bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-xl font-bold transition-all shadow-lg"
+            className="bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-xl font-bold transition-all shadow-lg active:scale-95"
           >
             Tìm kiếm
           </button>
         </form>
       </section>
 
-      {/* 2. Banner Đăng ký nhận thông báo (Để test SubscribeModal) */}
-      <div className="bg-gradient-to-r from-red-500 to-red-700 p-8 rounded-3xl flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl text-white">
+      {/* 2. Banner Đăng ký nhận thông báo việc làm */}
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-8 rounded-3xl flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl text-white">
         <div className="flex items-center gap-6">
           <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-sm">
             <svg
@@ -132,33 +134,34 @@ const Home = () => {
             </svg>
           </div>
           <div>
-            <h3 className="text-2xl font-black">Ưu đãi độc quyền!</h3>
+            <h3 className="text-2xl font-black">Việc làm mới nhất!</h3>
             <p className="opacity-90 font-medium text-lg">
-              Đăng ký để nhận thông báo ngay khi có hàng mới đúng gu của bạn.
+              Đăng ký để nhận email thông báo ngay khi có công việc phù hợp với
+              kỹ năng của bạn.
             </p>
           </div>
         </div>
         <button
           onClick={() => setIsSubsOpen(true)}
-          className="bg-white text-red-600 px-10 py-4 rounded-2xl font-black text-lg hover:bg-gray-100 transition-all shadow-lg whitespace-nowrap active:scale-95"
+          className="bg-white text-blue-600 px-10 py-4 rounded-2xl font-black text-lg hover:bg-gray-100 transition-all shadow-lg whitespace-nowrap active:scale-95"
         >
-          Đăng ký ngay
+          Nhận thông báo
         </button>
       </div>
 
-      {/* 3. Danh sách sản phẩm/Việc làm */}
+      {/* 3. Danh sách Việc làm nổi bật */}
       <section>
         <div className="flex justify-between items-end mb-8">
           <div>
             <h2 className="text-3xl font-bold text-gray-900 tracking-tight">
-              Sản phẩm nổi bật
+              Việc làm nổi bật
             </h2>
             <p className="text-gray-500 mt-1 italic">
-              Vừa mới cập nhật trong hôm nay
+              Khám phá các vị trí đang mở tuyển hấp dẫn nhất
             </p>
           </div>
           <span className="bg-gray-100 px-4 py-2 rounded-full text-sm font-bold text-gray-600 border">
-            {total} kết quả
+            {total} vị trí
           </span>
         </div>
 
@@ -174,7 +177,7 @@ const Home = () => {
         ) : jobs.length === 0 ? (
           <div className="text-center py-24 bg-gray-50 rounded-3xl border border-dashed border-gray-300">
             <p className="text-gray-500 text-lg">
-              Không tìm thấy sản phẩm nào phù hợp.
+              Hiện tại không tìm thấy công việc nào phù hợp.
             </p>
           </div>
         ) : (
@@ -191,7 +194,7 @@ const Home = () => {
             <button
               disabled={current === 1}
               onClick={() => setCurrent((prev) => prev - 1)}
-              className="w-12 h-12 flex items-center justify-center border rounded-2xl disabled:opacity-30 hover:bg-gray-50 transition-all"
+              className="w-12 h-12 flex items-center justify-center border rounded-2xl disabled:opacity-30 hover:bg-gray-100 transition-all active:scale-90"
             >
               &larr;
             </button>
@@ -203,7 +206,7 @@ const Home = () => {
                   className={`w-10 h-10 rounded-xl font-bold transition-all ${
                     current === i + 1
                       ? "bg-white text-red-600 shadow-sm scale-110"
-                      : "text-gray-500"
+                      : "text-gray-500 hover:text-gray-900"
                   }`}
                 >
                   {i + 1}
@@ -213,7 +216,7 @@ const Home = () => {
             <button
               disabled={current === totalPages}
               onClick={() => setCurrent((prev) => prev + 1)}
-              className="w-12 h-12 flex items-center justify-center border rounded-2xl disabled:opacity-30 hover:bg-gray-50 transition-all"
+              className="w-12 h-12 flex items-center justify-center border rounded-2xl disabled:opacity-30 hover:bg-gray-100 transition-all active:scale-90"
             >
               &rarr;
             </button>
@@ -221,7 +224,7 @@ const Home = () => {
         )}
       </section>
 
-      {/* --- MODAL ĐĂNG KÝ NHẬN TIN --- */}
+      {/* Modal đăng ký nhận tin */}
       <SubscribeModal
         isOpen={isSubsOpen}
         onClose={() => setIsSubsOpen(false)}
